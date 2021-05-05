@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pervasive_healthcare_app/utils.dart' as utils;
 
 Future<List<dynamic>> getCardiologyVisits(String id, String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/cardiologyvisits/$id');
+  var url = Uri.parse('${utils.apiPath}/cardiologyvisits/$id');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -16,7 +17,7 @@ Future<List<dynamic>> getCardiologyVisits(String id, String token) async {
 
 Future<Map<String, dynamic>> insertCardiologyVisit(
     Map<String, dynamic> body, String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/cardiologyvisits');
+  var url = Uri.parse('${utils.apiPath}/cardiologyvisits');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -28,7 +29,7 @@ Future<Map<String, dynamic>> insertCardiologyVisit(
 }
 
 Future<void> logout(String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/logout');
+  var url = Uri.parse('${utils.apiPath}/logout');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -38,7 +39,7 @@ Future<void> logout(String token) async {
 }
 
 Future<List<dynamic>> getChestPainType() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/chestpaintypes');
+  var url = Uri.parse('${utils.apiPath}/chestpaintypes');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -48,7 +49,7 @@ Future<List<dynamic>> getChestPainType() async {
 }
 
 Future<List<dynamic>> getRestingECG() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/restingecg');
+  var url = Uri.parse('${utils.apiPath}/restingecg');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -59,7 +60,7 @@ Future<List<dynamic>> getRestingECG() async {
 }
 
 Future<List<dynamic>> getslopeST() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/slopest');
+  var url = Uri.parse('${utils.apiPath}/slopest');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -70,7 +71,7 @@ Future<List<dynamic>> getslopeST() async {
 }
 
 Future<List<dynamic>> getThal() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/thals');
+  var url = Uri.parse('${utils.apiPath}/thals');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
