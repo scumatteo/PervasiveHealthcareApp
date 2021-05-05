@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pervasive_healthcare_app/API/auth.dart';
 import 'package:pervasive_healthcare_app/views/cardiologist_page.dart';
-import 'package:menu_button/menu_button.dart';
+import 'package:pervasive_healthcare_app/utils.dart' as utils;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -18,16 +18,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool obscureText = true;
 
-  List<String> keys = <String>[
-    'Low',
-    'Medium',
-    'High',
-  ];
-  String selectedKey;
-
   @override
   void initState() {
-    selectedKey = keys[0];
     super.initState();
   }
 
@@ -73,23 +65,6 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               })),
                     ),
-                    MenuButton<String>(
-                      child: Container(width: 100, child: Text(selectedKey)),
-                      items: keys,
-                      itemBuilder: (String value) => Container(
-                        width: 100,
-                        height: 40,
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 16),
-                        child: Text(value),
-                      ),
-                      onItemSelected: (String value) {
-                        setState(() {
-                          selectedKey = value;
-                        });
-                      },
-                    )
                   ],
                 ),
               ),
@@ -119,6 +94,8 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         int role = response["role"]["id"];
         String token = response["token"];
+        utils.token = token;
+        utils.id = id;
         switch (role) {
           case 0:
             print("patient");
@@ -131,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             break;
           case 8:
             Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return CardiologistPage(id, token);
+              return CardiologistPage();
             }));
 
             break;
