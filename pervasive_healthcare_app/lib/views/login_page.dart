@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pervasive_healthcare_app/API/auth.dart';
 import 'package:pervasive_healthcare_app/views/cardiologist_page.dart';
+import 'package:pervasive_healthcare_app/views/surgeon_page.dart';
 import 'package:pervasive_healthcare_app/utils.dart' as utils;
 
 class LoginPage extends StatefulWidget {
@@ -104,7 +105,9 @@ class _LoginPageState extends State<LoginPage> {
             print("general practitioner");
             break;
           case 2:
-            print("surgeon");
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return SurgeonPage();
+            }));
             break;
           case 8:
             Navigator.push(context, MaterialPageRoute(builder: (_) {
