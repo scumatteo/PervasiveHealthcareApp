@@ -369,40 +369,86 @@ class _PatientPageState extends State<PatientPage> {
             child: Text("Non hai ancora nessuna visita inserita"),
           ));
     }
-    //TODO
-    return Container();
-    /*
-    return SingleChildScrollView(
-        child: Column(children: [
-      Container(
-          padding: EdgeInsets.only(bottom: 8, top: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                  "Gruppo sanguigno: ${generalInfo["bloodGroup"]["bloodType"]["value"]} RH ${generalInfo["bloodGroup"]["rh"]["value"]}")
-            ],
-          )),
-      Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Peso: ${generalInfo["weight"]["value"]}")],
-          )),
-      Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Altezza: ${generalInfo["height"]["value"]}")],
-          )),
-      generalInfo["allergies"].isEmpty
-          ? Container()
-          : Container(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Allergie: ${generalInfo["allergies"]}")],
-              ))
-    ]));*/
+    return ListView.builder(
+        itemCount: cardiologyVisits["history"].length,
+        itemBuilder: (_, i) {
+          var elem = cardiologyVisits["history"][i];
+          return ListTile(
+            title: Column(
+              children: [
+                Text("ID dottore: ${elem["doctorID"]["value"]}"),
+                Text("ID visita: ${elem["cardiologyVisitID"]["value"]}")
+              ],
+            ),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      scrollable: true,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      title: Center(child: Text("Visita cardiologica")),
+                      content: SingleChildScrollView(
+                        child: Column(children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                        "ID medico: ${elem["doctorID"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "ID visita: ${elem["cardiologyVisitID"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Tipo di dolore: ${elem["chestPainType"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Pressione sanguigna: ${elem["restingBloodPressure"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Colesterolo: ${elem["cholesterol"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Concentrazione zuccheri > 120mg/dl: ${elem["fastingBloodSugar"]["value"] ? "Sì" : "No"}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Valore ECG: ${elem["restingElectrocardiographic"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Battiti cardiaci (max): ${elem["maxHeartRate"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Angina indotta: ${elem["isAnginaInducted"] ? "Sì" : "No"}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Vecchio picco: ${elem["oldPeakST"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Pendenza ST: ${elem["slopeST"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Numero vasi colorati: ${elem["numberVesselColoured"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Tipo difetto: ${elem["thal"]["value"]}",
+                                        overflow: TextOverflow.clip),
+                                    Text(
+                                        "Data visita: ${elem["visitDate"]["visitDate"]}",
+                                        overflow: TextOverflow.clip),
+                                  ],
+                                )
+                              ]),
+                          Container(height: 5),
+                          Divider(height: 1, thickness: 1)
+                        ]),
+                      ),
+                    );
+                  });
+            },
+          );
+        });
   }
 }

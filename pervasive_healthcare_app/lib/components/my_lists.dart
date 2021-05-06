@@ -345,3 +345,48 @@ Widget getMedicalCertificates(List<dynamic> medicalCertificates) {
         ]);
       });
 }
+
+/**********************CARDIOLOGY VISITS ***************************************/
+
+Widget getCardiologyVisitsHistory(List<dynamic> cardiologyVisits) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: cardiologyVisits.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text("ID medico: ${cardiologyVisits[i]["doctorID"]["value"]}"),
+                Text(
+                    "ID visita: ${cardiologyVisits[i]["cardiologyVisitID"]["value"]}"),
+                Text(
+                    "Tipo di dolore: ${cardiologyVisits[i]["chestPainType"]["value"]}"),
+                Text(
+                    "Pressione sanguigna: ${cardiologyVisits[i]["restingBloodPressure"]["value"]}"),
+                Text(
+                    "Colesterolo: ${cardiologyVisits[i]["cholesterol"]["value"]}"),
+                Text(
+                    "Concentrazione zuccheri > 120mg/dl: ${cardiologyVisits[i]["fastingBloodSugar"]["value"] ? "Sì" : "No"}"),
+                Text(
+                    "Valore ECG: ${cardiologyVisits[i]["restingElectrocardiographic"]["value"]}"),
+                Text(
+                    "Battiti cardiaci (max): ${cardiologyVisits[i]["maxHeartRate"]["value"]}"),
+                Text(
+                    "Angina indotta: ${cardiologyVisits[i]["isAnginaInducted"] ? "Sì" : "No"}"),
+                Text(
+                    "Vecchio picco: ${cardiologyVisits[i]["oldPeakST"]["value"]}"),
+                Text("Pendenza ST: ${cardiologyVisits[i]["slopeST"]["value"]}"),
+                Text(
+                    "Numero vasi colorati: ${cardiologyVisits[i]["numberVesselColoured"]["value"]}"),
+                Text("Tipo difetto: ${cardiologyVisits[i]["thal"]["value"]}"),
+                Text(
+                    "Data visita: ${cardiologyVisits[i]["visitDate"]["visitDate"]}"),
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
