@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:menu_button/menu_button.dart';
 import 'package:pervasive_healthcare_app/API/cardiologist_requests.dart';
+import 'package:pervasive_healthcare_app/components/my_drawer.dart';
 import 'package:pervasive_healthcare_app/utils.dart' as utils;
 import 'package:pervasive_healthcare_app/views/login_page.dart';
 
@@ -22,27 +23,7 @@ class _CardiologistPageState extends State<CardiologistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Le mie visite")),
-      drawer: Drawer(
-          child: Column(children: [
-        Padding(
-            padding: EdgeInsets.only(top: 50),
-            child:
-                Text("Pervasive Healthcare", style: TextStyle(fontSize: 20))),
-        Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Text("Il tuo ID: ${utils.id}")),
-        ListTile(
-          title: Text("Logout"),
-          onTap: () async {
-            await logout(utils.token);
-            utils.id = null;
-            utils.token = null;
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return LoginPage();
-            }));
-          },
-        )
-      ])),
+      drawer: getDrawer(context),
       body: FutureBuilder<List<dynamic>>(
           future: getCardiologyVisits(utils.id, utils.token),
           builder: (_, AsyncSnapshot<List<dynamic>> snapshot) {
