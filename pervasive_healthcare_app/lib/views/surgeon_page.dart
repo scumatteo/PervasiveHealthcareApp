@@ -15,7 +15,6 @@ class SurgeonPage extends StatefulWidget {
 
 class _SurgeonPageState extends State<SurgeonPage> {
   var kinshipDegreeFuture = getKinshipDegree();
-  var surgeonsFuture = getSurgeons();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +90,6 @@ class _SurgeonPageState extends State<SurgeonPage> {
           child: Icon(Icons.add),
           onPressed: () async {
             var kinshipDegreeType = await kinshipDegreeFuture;
-            var surgeonsType = await surgeonsFuture;
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return MedicalRecordInsertPage(kinshipDegreeType);
             }));
@@ -116,6 +114,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
 
   TextEditingController medicalRecordIDController = TextEditingController();
   TextEditingController doctorIDController = TextEditingController();
+  TextEditingController doctorTreatmentController = TextEditingController();
   TextEditingController patientIDController = TextEditingController();
   TextEditingController hospitalizationMotivationController =
       TextEditingController();
@@ -153,7 +152,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
   int kinshipDegreeSelectedIndex = 0;
   int surgeonSelectedIndex = 0;
   int severityIndex = 0;
-  bool familiarController = false;
+  bool anamnesisController = false;
+  bool initialAnalysisController = false;
+  bool healthEvolutionController = false;
+  bool diagnosticTreatmentsController = false;
+  bool therapeuticTreatmentsController = false;
+  bool rehabilitationTreatmentsController = false;
+  bool clinicalDiaryController = false;
   int isClosedSelected = 0;
   List<int> isClosedChoice = [0, 1];
   List<bool> _isOpen;
@@ -165,6 +170,8 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
   @override
   void initState() {
     doctorIDController.text = utils.id;
+    doctorTreatmentController.text = "000001";
+
     widget.kinshipDegree.forEach((element) {
       kinshipeDegreeMap[element["id"]] = element["value"];
     });
@@ -279,15 +286,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: familiarNameController,
                                 validator: (id) {
-                                  if ((remoteInformationController
-                                              .text.isNotEmpty ||
-                                          familiarController ||
-                                          physiologicInformationController
-                                              .text.isNotEmpty) &&
-                                      id.isEmpty) {
+                                  if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
-                                  if (id.isNotEmpty) familiarController = true;
+                                  if (id.isNotEmpty) {
+                                    anamnesisController = true;
+                                    initialAnalysisController = true;
+                                  }
                                 },
                                 decoration:
                                     InputDecoration(labelText: "Nome Cognome"),
@@ -330,18 +335,15 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                 ),
                                 children: [
                                   TextFormField(
-                                    controller: familiarNameController,
+                                    controller: pathologyNameController,
                                     validator: (id) {
-                                      if ((remoteInformationController
-                                                  .text.isNotEmpty ||
-                                              familiarController ||
-                                              physiologicInformationController
-                                                  .text.isNotEmpty) &&
-                                          id.isEmpty) {
+                                      if ((anamnesisController) && id.isEmpty) {
                                         return "Campo obbligatorio";
                                       }
-                                      if (id.isNotEmpty)
-                                        familiarController = true;
+                                      if (id.isNotEmpty) {
+                                        anamnesisController = true;
+                                        initialAnalysisController = true;
+                                      }
                                     },
                                     decoration: InputDecoration(
                                         labelText: "Nome patologia"),
@@ -381,15 +383,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: familiarPhoneController,
                                 validator: (id) {
-                                  if ((remoteInformationController
-                                              .text.isNotEmpty ||
-                                          familiarController ||
-                                          physiologicInformationController
-                                              .text.isNotEmpty) &&
-                                      id.isEmpty) {
+                                  if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
-                                  if (id.isNotEmpty) familiarController = true;
+                                  if (id.isNotEmpty) {
+                                    anamnesisController = true;
+                                    initialAnalysisController = true;
+                                  }
                                 },
                                 decoration:
                                     InputDecoration(labelText: "Cellulare"),
@@ -404,13 +404,15 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                             ),
                             children: [
                               TextFormField(
-                                controller: physiologicInformationController,
+                                controller: remoteInformationController,
                                 validator: (id) {
-                                  if ((familiarController ||
-                                          physiologicInformationController
-                                              .text.isNotEmpty) &&
-                                      id.isEmpty) {
+                                  if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
+                                  }
+                                  if (id.isNotEmpty) {
+                                    print("logged");
+                                    anamnesisController = true;
+                                    initialAnalysisController = true;
                                   }
                                 },
                                 decoration:
@@ -428,11 +430,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: physiologicInformationController,
                                 validator: (id) {
-                                  if ((familiarController ||
-                                          remoteInformationController
-                                              .text.isNotEmpty) &&
-                                      id.isEmpty) {
+                                  if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
+                                  }
+                                  if (id.isNotEmpty) {
+                                    anamnesisController = true;
+                                    initialAnalysisController = true;
                                   }
                                 },
                                 decoration:
@@ -452,15 +455,14 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           TextFormField(
                             controller: hospitalizationMotivationController,
                             validator: (id) {
-                              if ((systemsInvestigationController.text.isNotEmpty ||
-                                      familiarController ||
-                                      remoteInformationController
+                              if ((systemsInvestigationController
                                           .text.isNotEmpty ||
-                                      physiologicInformationController
-                                          .text.isNotEmpty) &&
+                                      anamnesisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(
                                 labelText: "Motivazione del ricovero"),
@@ -470,14 +472,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                             validator: (id) {
                               if ((hospitalizationMotivationController
                                           .text.isNotEmpty ||
-                                      familiarController ||
-                                      remoteInformationController
-                                          .text.isNotEmpty ||
-                                      physiologicInformationController
-                                          .text.isNotEmpty) &&
+                                      anamnesisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Investigazione"),
@@ -497,10 +497,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               if ((nutritionalStateController.text.isNotEmpty ||
                                       educationalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
+                                      socialStateController.text.isNotEmpty ||
+                                      initialAnalysisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Psicologico"),
@@ -512,10 +515,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                           .text.isNotEmpty ||
                                       educationalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
+                                      socialStateController.text.isNotEmpty ||
+                                      initialAnalysisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Nutrizionale"),
@@ -526,10 +532,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               if ((nutritionalStateController.text.isNotEmpty ||
                                       psychologicalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
+                                      socialStateController.text.isNotEmpty ||
+                                      initialAnalysisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(labelText: "Educativo"),
                           ),
@@ -540,10 +549,13 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                       educationalStateController
                                           .text.isNotEmpty ||
                                       psychologicalStateController
-                                          .text.isNotEmpty) &&
+                                          .text.isNotEmpty ||
+                                      initialAnalysisController) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
+                              if (id.isNotEmpty)
+                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(labelText: "Sociale"),
                           ),
@@ -567,6 +579,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                         children: [
                           TextFormField(
                             controller: healthEvolutionInfoController,
+                            validator: (id) {
+                              if (id.isNotEmpty) {
+                                clinicalDiaryController = true;
+                                healthEvolutionController = true;
+                              }
+                            },
                             decoration:
                                 InputDecoration(labelText: "Informazioni"),
                           ),
@@ -588,8 +606,20 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: diagnosticTreatmentDescrController,
+                            validator: (id) {
+                              if (id.isNotEmpty) {
+                                clinicalDiaryController = true;
+                                diagnosticTreatmentsController = true;
+                              }
+                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
+                          ),
+                          TextFormField(
+                            controller: doctorTreatmentController,
+                            enabled: false,
+                            decoration:
+                                InputDecoration(labelText: "ID dottore"),
                           ),
                         ],
                       ),
@@ -609,8 +639,20 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: therapeuticTreatmentDescrController,
+                            validator: (id) {
+                              if (id.isNotEmpty) {
+                                clinicalDiaryController = true;
+                                therapeuticTreatmentsController = true;
+                              }
+                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
+                          ),
+                          TextFormField(
+                            controller: doctorTreatmentController,
+                            enabled: false,
+                            decoration:
+                                InputDecoration(labelText: "ID dottore"),
                           ),
                         ],
                       ),
@@ -630,25 +672,23 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: rehabilitationTreatmentDescrController,
+                            validator: (id) {
+                              if (id.isNotEmpty) {
+                                clinicalDiaryController = true;
+                                rehabilitationTreatmentsController = true;
+                              }
+                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
                           ),
+                          TextFormField(
+                            controller: doctorTreatmentController,
+                            enabled: false,
+                            decoration:
+                                InputDecoration(labelText: "ID dottore"),
+                          ),
                         ],
                       )
-                    ],
-                  ),
-                  ExpansionTile(
-                    title: Text(
-                      "Report delle operazioni",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    children: [
-                      TextFormField(
-                        controller: operatingReportsInterventionTypeController,
-                        decoration:
-                            InputDecoration(labelText: "Tipo di intervento"),
-                      ),
                     ],
                   ),
                 ],
@@ -665,62 +705,67 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
       body["doctorID"] = {"value": doctorIDController.text};
       body["patientID"] = {"value": patientIDController.text};
       body["isClosed"] = isClosedSelected == 1 ? true : false;
-      body["initialAnalysis"] = {
-        "anamnesi": {
-          "familiars": {
-            "familiars": [
-              {
-                "name": familiarNameController.text,
-                "kinshipDegree": {
-                  "id": kinshipDegreeSelectedIndex,
-                  "value": kinshipeDegreeMap[kinshipDegreeSelectedIndex]
-                },
-                "previousPathologies": {
-                  "pathologies": [
-                    {
-                      "pathologyName": {"value": pathologyNameController.text},
-                      "detectionDate": {
-                        "value": utils.localDate.format(DateTime.now())
-                      },
-                      "pathologySeverity": {
-                        "description": severityMap[severityIndex],
-                        "severity": {
-                          "id": severityIndex,
-                          "value": severityIndex == 0
-                              ? "ONE"
-                              : severityIndex == 1
-                                  ? "TWO"
-                                  : severityIndex == 2
-                                      ? "THREE"
-                                      : "FOUR"
+
+      if (initialAnalysisController && anamnesisController) {
+        body["initialAnalysis"] = {
+          "anamnesi": {
+            "familiars": {
+              "familiars": [
+                {
+                  "name": familiarNameController.text,
+                  "kinshipDegree": {
+                    "id": kinshipDegreeSelectedIndex,
+                    "value": kinshipeDegreeMap[kinshipDegreeSelectedIndex]
+                  },
+                  "previousPathologies": {
+                    "pathologies": [
+                      {
+                        "pathologyName": {
+                          "value": pathologyNameController.text
+                        },
+                        "detectionDate": {
+                          "value": utils.localDate.format(DateTime.now())
+                        },
+                        "pathologySeverity": {
+                          "description": severityMap[severityIndex],
+                          "severity": {
+                            "id": severityIndex,
+                            "value": severityIndex == 0
+                                ? "ONE"
+                                : severityIndex == 1
+                                    ? "TWO"
+                                    : severityIndex == 2
+                                        ? "THREE"
+                                        : "FOUR"
+                          }
                         }
                       }
-                    }
-                  ]
-                },
-                "phoneNumber": familiarPhoneController.text
-              }
-            ]
+                    ]
+                  },
+                  "phoneNumber": familiarPhoneController.text
+                }
+              ]
+            },
+            "remotes": {
+              "history": [
+                {
+                  "info": remoteInformationController.text,
+                  "date": utils.localDate.format(DateTime.now())
+                }
+              ]
+            },
+            "physiologic": {
+              "info": physiologicInformationController.text,
+              "date": utils.localDate.format(DateTime.now())
+            }
           },
-          "remotes": {
-            "history": [
-              {
-                "info": remoteInformationController.text,
-                "date": utils.localDate.format(DateTime.now())
-              }
-            ]
-          },
-          "physiologic": {
-            "info": physiologicInformationController.text,
-            "date": utils.localDate.format(DateTime.now())
-          }
-        },
-        "physicalExamination": {
-          "hospitalizationMotivation": {
-            "value": hospitalizationMotivationController.text
-          },
-          "systemsInvestigation": {
-            "value": systemsInvestigationController.text
+          "physicalExamination": {
+            "hospitalizationMotivation": {
+              "value": hospitalizationMotivationController.text
+            },
+            "systemsInvestigation": {
+              "value": systemsInvestigationController.text
+            }
           },
           "stateEvaluation": {
             "psychological": {"value": psychologicalStateController.text},
@@ -728,105 +773,87 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
             "educational": {"value": educationalStateController.text},
             "social": {"value": socialStateController.text}
           }
-        }
-      };
-      body["clinicalDiary"] = {
-        "healthEvolution": {
-          "info": {"value": healthEvolutionInfoController.text},
-          "dateTime": utils.localDate.format(DateTime.now())
-        },
-        "diagnosticTreatments": {
-          "diagnosticTreatments": [
-            {
-              "treatment": {
-                "date":
-                    utils.localDate.format(diagnosticTreatmentDateController),
-                "description": {
-                  "value": diagnosticTreatmentDescrController.text
-                },
-                "doctorID": {"value": "000000"}
-              }
+        };
+      } else if (initialAnalysisController) {
+        body["initialAnalysis"] = {
+          "physicalExamination": {
+            "hospitalizationMotivation": {
+              "value": hospitalizationMotivationController.text
+            },
+            "systemsInvestigation": {
+              "value": systemsInvestigationController.text
             }
-          ]
-        },
-        "therapeuticTreatments": {
-          "therapeuticTreatments": [
+          },
+          "stateEvaluation": {
+            "psychological": {"value": psychologicalStateController.text},
+            "nutritional": {"value": nutritionalStateController.text},
+            "educational": {"value": educationalStateController.text},
+            "social": {"value": socialStateController.text}
+          }
+        };
+      }
+      if (clinicalDiaryController) {
+        body["clinicalDiary"] = {
+          if (healthEvolutionController)
             {
-              "treatment": {
-                "date":
-                    utils.localDate.format(therapeuticTreatmentDateController),
-                "description": {
-                  "value": therapeuticTreatmentDescrController.text
-                },
-                "doctorID": {"value": "000000"}
-              }
-            }
-          ]
-        },
-        "rehabilitationTreatments": {
-          "rehabilitationTreatments": [
-            {
-              "treatment": {
-                "date": utils.localDate
-                    .format(rehabilitationTreatmentDateController),
-                "description": {
-                  "value": rehabilitationTreatmentDescrController.text
-                },
-                "doctorID": {"value": "000000"}
-              }
-            }
-          ]
-        }
-      };
-      body["operatingReports"] = {
-        "medical": {
-          "surgeons": [
-            {
-              "surgeon": {
-                "doctorID": {"value": "000000"},
-                "name": "Lucia",
-                "surname": "Galletti",
-                "phoneNumber": "333555666",
-                "email": "lg@gmail.com",
-                "medicalDegreeGrade": "110",
-                "specialization": {"id": 0, "value": "GENERAL_SURGERY"},
-                "role": {"id": 2, "value": "SURGEON"}
+              "healthEvolution": {
+                "info": {"value": healthEvolutionInfoController.text},
+                "dateTime": utils.localDate.format(DateTime.now())
               },
-              "note": {"value": "Operazione riuscita"}
-            }
-          ],
-          "anesthetists": [
+            },
+          if (diagnosticTreatmentsController)
             {
-              "anesthetist": {
-                "doctorID": {"value": "000001"},
-                "name": "Luca",
-                "surname": "Verdi",
-                "phoneNumber": "333555666",
-                "email": "lv@gmail.com",
-                "medicalDegreeGrade": "110",
-                "role": {"id": 3, "value": "ANESTHETIST"}
+              "diagnosticTreatments": {
+                "diagnosticTreatments": [
+                  {
+                    "treatment": {
+                      "date": utils.localDate
+                          .format(diagnosticTreatmentDateController),
+                      "description": {
+                        "value": diagnosticTreatmentDescrController.text
+                      },
+                      "doctorID": {"value": doctorTreatmentController.text}
+                    }
+                  }
+                ]
+              },
+            },
+          if (therapeuticTreatmentsController)
+            {
+              "therapeuticTreatments": {
+                "therapeuticTreatments": [
+                  {
+                    "treatment": {
+                      "date": utils.localDate
+                          .format(therapeuticTreatmentDateController),
+                      "description": {
+                        "value": therapeuticTreatmentDescrController.text
+                      },
+                      "doctorID": {"value": doctorTreatmentController.text}
+                    }
+                  }
+                ]
+              },
+            },
+          if (rehabilitationTreatmentsController)
+            {
+              "rehabilitationTreatments": {
+                "rehabilitationTreatments": [
+                  {
+                    "treatment": {
+                      "date": utils.localDate
+                          .format(rehabilitationTreatmentDateController),
+                      "description": {
+                        "value": rehabilitationTreatmentDescrController.text
+                      },
+                      "doctorID": {"value": doctorTreatmentController.text}
+                    }
+                  }
+                ]
               }
             }
-          ],
-          "instrumentalists": [
-            {
-              "instrumentalist": {
-                "doctorID": {"value": "000002"},
-                "name": "Maria",
-                "surname": "Rossi",
-                "phoneNumber": "333555666",
-                "email": "mr@gmail.com",
-                "nursingDegreeGrade": "102",
-                "role": {"id": 4, "value": "INSTRUMENTALIST"}
-              }
-            }
-          ]
-        },
-        "datetime": utils.localDate.format(DateTime.now()),
-        "interventionType": {
-          "value": operatingReportsInterventionTypeController.text
-        },
-      };
+        };
+      }
 
       Map<String, dynamic> response =
           await insertMedicalRecord(body, utils.token);

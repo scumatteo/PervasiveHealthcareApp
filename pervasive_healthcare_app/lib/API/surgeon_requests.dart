@@ -47,14 +47,3 @@ Future<List<dynamic>> getKinshipDegree() async {
 
   return jsonDecode(response.body);
 }
-
-Future<List<dynamic>> getSurgeons() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/surgeons');
-  Map<String, String> headers = {
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-  };
-  var response = await http.get(url, headers: headers);
-
-  return jsonDecode(response.body);
-}
