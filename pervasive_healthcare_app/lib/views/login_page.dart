@@ -4,6 +4,7 @@ import 'package:pervasive_healthcare_app/views/cardiologist_page.dart';
 import 'package:pervasive_healthcare_app/views/surgeon_page.dart';
 import 'package:pervasive_healthcare_app/utils.dart' as utils;
 import 'package:pervasive_healthcare_app/views/patient_page.dart';
+import 'package:pervasive_healthcare_app/views/generalpractitioner_page.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -105,7 +106,9 @@ class _LoginPageState extends State<LoginPage> {
             }));
             break;
           case 1:
-            print("general practitioner");
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return GeneralPractitionerPage();
+            }));
             break;
           case 2:
             Navigator.push(context, MaterialPageRoute(builder: (_) {
