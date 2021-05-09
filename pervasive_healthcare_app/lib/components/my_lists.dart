@@ -346,6 +346,143 @@ Widget getMedicalCertificates(List<dynamic> medicalCertificates) {
       });
 }
 
+Widget getFamiliarAnamnesis(
+    List<dynamic> familiarAnamnesis, List<dynamic> previousPathologies) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: familiarAnamnesis.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text("Nome Cognome: ${familiarAnamnesis[i]["name"]}"),
+                Text(
+                    "Grado di parentela: ${familiarAnamnesis[i]["kinshipDegree"]}"),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: previousPathologies.length,
+                    itemBuilder: (_, y) {
+                      return Column(children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                      "Nome patologia: ${previousPathologies[y]["pathologyName"]["value"]}"),
+                                  Text(
+                                      "Data diagnosi: ${previousPathologies[y]["detectionDate"]["value"]}"),
+                                  Text(
+                                      "Grado di severità: ${previousPathologies[y]["pathologySeverity"]["severity"]} ${previousPathologies[y]["pathologySeverity"]["description"]}"),
+                                ],
+                              )
+                            ]),
+                        Container(height: 5),
+                        Divider(height: 1, thickness: 1)
+                      ]);
+                    }),
+                Text(
+                    "Numero di telefono: ${familiarAnamnesis[i]["phoneNumber"]}")
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
+
+Widget getRemotesAnamnesis(List<dynamic> remoteAnamnesis) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: remoteAnamnesis.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text("Informazioni: ${remoteAnamnesis[i]["info"]}"),
+                Text("Data: ${remoteAnamnesis[i]["date"]}"),
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
+
+Widget getDiagnosticTreatments(List<dynamic> diagnosticTreatments) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: diagnosticTreatments.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text("Data: ${diagnosticTreatments[i]["treatment"]["date"]}"),
+                Text(
+                    "Descrizione: ${diagnosticTreatments[i]["treatment"]["description"]["value"]}"),
+                Text(
+                    "ID medico: ${diagnosticTreatments[i]["treatment"]["doctorID"]["value"]}"),
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
+
+Widget getTherapeuticTreatments(List<dynamic> therapeuticTreatments) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: therapeuticTreatments.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text("Data: ${therapeuticTreatments[i]["treatment"]["date"]}"),
+                Text(
+                    "Descrizione: ${therapeuticTreatments[i]["treatment"]["description"]["value"]}"),
+                Text(
+                    "ID medico: ${therapeuticTreatments[i]["treatment"]["doctorID"]["value"]}"),
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
+
+Widget getRehabilitationTreatments(List<dynamic> rehabilitationTreatments) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: rehabilitationTreatments.length,
+      itemBuilder: (_, i) {
+        return Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              children: [
+                Text(
+                    "Data: ${rehabilitationTreatments[i]["treatment"]["date"]}"),
+                Text(
+                    "Descrizione: ${rehabilitationTreatments[i]["treatment"]["description"]["value"]}"),
+                Text(
+                    "ID medico: ${rehabilitationTreatments[i]["treatment"]["doctorID"]["value"]}"),
+              ],
+            )
+          ]),
+          Container(height: 5),
+          Divider(height: 1, thickness: 1)
+        ]);
+      });
+}
+
 /**********************CARDIOLOGY VISITS ***************************************/
 
 Widget getCardiologyVisitsHistory(List<dynamic> cardiologyVisits) {

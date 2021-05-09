@@ -5,6 +5,7 @@ import 'package:menu_button/menu_button.dart';
 import 'package:pervasive_healthcare_app/API/surgeon_requests.dart';
 import 'package:pervasive_healthcare_app/views/login_page.dart';
 import 'dart:async';
+import 'package:pervasive_healthcare_app/components/my_lists.dart';
 
 class SurgeonPage extends StatefulWidget {
   SurgeonPage();
@@ -75,8 +76,7 @@ class _SurgeonPageState extends State<SurgeonPage> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
-                            print("detail");
-                            return null;
+                            return MedicalRecordDetailPage(snapshot.data[i]);
                           }));
                         },
                       );
@@ -878,206 +878,310 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
   }
 }
 
-/* class MedicalRecordDetailPage extends StatefulWidget {
+class MedicalRecordDetailPage extends StatefulWidget {
   Map<String, dynamic> medicalrecord;
 
   MedicalRecordDetailPage(this.medicalrecord);
   @override
   _MedicalRecordDetailPageState createState() =>
-      _MedicalRecordDetailPageState();
+      _MedicalRecordDetailPageState(this.medicalrecord);
 }
 
 class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
+  Map<String, dynamic> detailmedicalrecord;
+
+  Map<String, dynamic> initialAnalysis;
+  _MedicalRecordDetailPageState(medicalrecord) {
+    detailmedicalrecord = medicalrecord;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("Cartella clinica")),
         body: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Column(children: [
+          padding: EdgeInsets.only(top: 20),
+          child: Column(children: [
+            Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text("ID cartella clinica: ")),
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text(
+                          "${widget.medicalrecord["medicalRecordID"]["value"]}")),
+                ])),
+            Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text("ID paziente: ")),
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text(
+                          "${widget.medicalrecord["patientID"]["value"]}")),
+                ])),
+            Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text("ID medico: ")),
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child:
+                          Text("${widget.medicalrecord["doctorID"]["value"]}")),
+                ])),
+            Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text("Stato: ")),
+                  Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text(
+                          ("${widget.medicalrecord["isClosed"]}") == "true"
+                              ? "Chiusa"
+                              : "Aperta")),
+                ])),
+            detailmedicalrecord.containsKey("initialAnalysis")
+                ? detailmedicalrecord["initialAnalysis"]
+                        .containsKey("anamnesis")
+                    ? Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: ListTile(
+                                title: Center(
+                                    child: Text("Mostra anamnesi familiari")),
+                                onTap: () => showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return AlertDialog(
+                                          scrollable: true,
+                                          title: Center(
+                                              child:
+                                                  Text("Anamnesi familiari")),
+                                          content: Container(
+                                            width: 300,
+                                            height: 200,
+                                            child: getFamiliarAnamnesis(
+                                                detailmedicalrecord[
+                                                        "initialAnalysis"]
+                                                    ["anamnesis"]["familiars"],
+                                                detailmedicalrecord[
+                                                            "initialAnalysis"][
+                                                        "anamnesis"]["familiars"]
+                                                    ["previousPathologies"]),
+                                          ));
+                                    }),
+                              )),
+                          Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: ListTile(
+                                title: Center(
+                                    child: Text("Mostra anamnesi remote")),
+                                onTap: () => showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return AlertDialog(
+                                          scrollable: true,
+                                          title: Center(
+                                              child: Text("Anamnesi remote")),
+                                          content: Container(
+                                            width: 300,
+                                            height: 200,
+                                            child: getRemotesAnamnesis(
+                                                detailmedicalrecord[
+                                                        "initialAnalysis"]
+                                                    ["anamnesis"]["remotes"]),
+                                          ));
+                                    }),
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: Text("Anamnesi fisiologica: ")),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                          "Informazioni: ${detailmedicalrecord["initialAnalysis"]["anamnesis"]["physiologic"]["info"]}"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                          "Data: ${detailmedicalrecord["initialAnalysis"]["anamnesis"]["physiologic"]["date"]}"),
+                                    ),
+                                  ])),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("Nessuna anamnesi inserita"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Text("Esaminazione fisica: ")),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                      "Motivazione ricovero: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["hospitalizationMotivation"]["value"]}"),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                      "Investigazione: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["systemsInvestigation"]["value"]}"),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                : Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Text("Nessuna analisi iniziale inserita"),
+                  ),
+            if (detailmedicalrecord.containsKey("clinicalDiary"))
+              (Column(children: [
+                detailmedicalrecord["clinicalDiary"]
+                        .containsKey("healthEvolution")
+                    ? (Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Text("Evoluzione della salute: ")),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                      "Informazioni: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["info"]["value"]}"),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                      "Data: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["dateTime"]}"),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Nessuna analisi iniziale inserita"),
+                      ),
+                detailmedicalrecord["clinicalDiary"]
+                        .containsKey("diagnosticTreatments")
+                    ? (Container(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title:
+                              Center(child: Text("Trattamenti diagnostici:")),
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                    scrollable: true,
+                                    content: Container(
+                                      width: 300,
+                                      height: 200,
+                                      child: getDiagnosticTreatments(
+                                          detailmedicalrecord["clinicalDiary"]
+                                                  ["diagnosticTreatments"]
+                                              ["diagnosticTreatments"]),
+                                    ));
+                              }),
+                        ),
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Nessun trattamento diagnostio inserito"),
+                      ),
+                detailmedicalrecord["clinicalDiary"]
+                        .containsKey("therapeuticTreatments")
+                    ? (Container(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title:
+                              Center(child: Text("Trattamenti terapeutici:")),
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                    scrollable: true,
+                                    content: Container(
+                                      width: 300,
+                                      height: 200,
+                                      child: getTherapeuticTreatments(
+                                          detailmedicalrecord["clinicalDiary"]
+                                                  ["therapeuticTreatments"]
+                                              ["therapeuticTreatments"]),
+                                    ));
+                              }),
+                        ),
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text("Nessun trattamento terapeutico inserito"),
+                      ),
+                detailmedicalrecord["clinicalDiary"]
+                        .containsKey("rehabilitationTreatments")
+                    ? (Container(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title:
+                              Center(child: Text("Trattamenti riabilitativi:")),
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                    scrollable: true,
+                                    content: Container(
+                                      width: 300,
+                                      height: 200,
+                                      child: getRehabilitationTreatments(
+                                          detailmedicalrecord["clinicalDiary"]
+                                                  ["rehabilitationTreatments"]
+                                              ["rehabilitationTreatments"]),
+                                    ));
+                              }),
+                        ),
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child:
+                            Text("Nessun trattamento riabilitativo inserito"),
+                      ),
+              ]))
+            else
               Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("ID cartella clinica: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.medicalrecord["medicalRecordID"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("ID paziente: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.medicalrecord["patientID"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("ID medico: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.medicalrecord["doctorID"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Tipo di dolore toracico: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["chestPainType"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Pressione sanguigna a riposo: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["restingBloodPressure"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Colesterolo: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["cholesterol"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Zuccheri nel sangue > 120 mg/dl: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(widget.visit["fastingBloodSugar"]
-                                    ["value"]
-                                ? "Sì"
-                                : "No")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Elettrocardiogramma a riposo: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["restingElectrocardiographic"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Battiti cardiaci (max): ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["maxHeartRate"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Angina indotta: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(widget.visit["isAnginaInducted"]
-                                ? "Sì"
-                                : "No")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Depressione ST: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child:
-                                Text("${widget.visit["oldPeakST"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Pendenza ST: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("${widget.visit["slopeST"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Numero di vasi colorati: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                                "${widget.visit["numberVesselColoured"]["value"]}")),
-                      ])),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("Tipo difetto: ")),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("${widget.visit["thal"]["value"]}")),
-                      ])),
-            ])));
+                padding: EdgeInsets.only(right: 10),
+                child: Text("Nessun diario clinico inserito"),
+              ),
+          ]),
+        ));
   }
-}*/
+}

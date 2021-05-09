@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pervasive_healthcare_app/utils.dart' as utils;
 
 Future<List<dynamic>> getMedicalRecords(String id, String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/medicalrecords/$id');
+  var url = Uri.parse('${utils.apiPath}/medicalrecords/$id');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -15,7 +16,7 @@ Future<List<dynamic>> getMedicalRecords(String id, String token) async {
 }
 
 Future<void> logout(String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/logout');
+  var url = Uri.parse('${utils.apiPath}/logout');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -26,7 +27,7 @@ Future<void> logout(String token) async {
 
 Future<Map<String, dynamic>> insertMedicalRecord(
     Map<String, dynamic> body, String token) async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/medicalrecords');
+  var url = Uri.parse('${utils.apiPath}/medicalrecords');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -38,7 +39,7 @@ Future<Map<String, dynamic>> insertMedicalRecord(
 }
 
 Future<List<dynamic>> getKinshipDegree() async {
-  var url = Uri.parse('http://10.0.2.2:8080/api/kinshipdegrees');
+  var url = Uri.parse('${utils.apiPath}/kinshipdegrees');
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
