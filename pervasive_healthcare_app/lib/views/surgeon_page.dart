@@ -898,7 +898,10 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Cartella clinica")),
+        appBar: AppBar(
+            title: Text(
+          "Cartella clinica",
+        )),
         body: Padding(
           padding: EdgeInsets.only(top: 20),
           child: Column(children: [
@@ -961,15 +964,25 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                               padding: EdgeInsets.symmetric(vertical: 8),
                               child: ListTile(
                                 title: Center(
-                                    child: Text("Mostra anamnesi familiari")),
+                                  child: Text(
+                                    "Mostra anamnesi familiari",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                                 onTap: () => showDialog(
                                     context: context,
                                     builder: (_) {
                                       return AlertDialog(
                                           scrollable: true,
                                           title: Center(
-                                              child:
-                                                  Text("Anamnesi familiari")),
+                                              child: Text(
+                                            "Anamnesi familiari",
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          )),
                                           content: Container(
                                             width: 300,
                                             height: 200,
@@ -988,14 +1001,24 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                               padding: EdgeInsets.symmetric(vertical: 8),
                               child: ListTile(
                                 title: Center(
-                                    child: Text("Mostra anamnesi remote")),
+                                    child: Text(
+                                  "Mostra anamnesi remote",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                )),
                                 onTap: () => showDialog(
                                     context: context,
                                     builder: (_) {
                                       return AlertDialog(
                                           scrollable: true,
                                           title: Center(
-                                              child: Text("Anamnesi remote")),
+                                              child: Text(
+                                            "Anamnesi remote",
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          )),
                                           content: Container(
                                             width: 300,
                                             height: 200,
@@ -1013,7 +1036,12 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                                   children: [
                                     Padding(
                                         padding: EdgeInsets.only(right: 10),
-                                        child: Text("Anamnesi fisiologica: ")),
+                                        child: Text(
+                                          "Anamnesi fisiologica: ",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                     Padding(
                                       padding: EdgeInsets.only(right: 10),
                                       child: Text(
@@ -1031,34 +1059,55 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 10),
-                            child: Text("Nessuna anamnesi inserita"),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Text("Esaminazione fisica: ")),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                      "Motivazione ricovero: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["hospitalizationMotivation"]["value"]}"),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                      "Investigazione: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["systemsInvestigation"]["value"]}"),
-                                )
-                              ],
+                            child: Text(
+                              "Nessuna anamnesi inserita",
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.bold),
                             ),
+                          ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              "Esaminazione fisica: ",
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 10),
+                                          child: Text(
+                                              "Motivazione ricovero: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["hospitalizationMotivation"]["value"]}"),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 10),
+                                          child: Text(
+                                              "Investigazione: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["systemsInvestigation"]["value"]}"),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       )
                 : Padding(
                     padding: EdgeInsets.only(right: 10),
-                    child: Text("Nessuna analisi iniziale inserita"),
+                    child: Text(
+                      "Nessuna analisi iniziale inserita",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
                   ),
             if (detailmedicalrecord.containsKey("clinicalDiary"))
               (Column(children: [
@@ -1073,7 +1122,12 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                               children: [
                                 Padding(
                                     padding: EdgeInsets.only(right: 10),
-                                    child: Text("Evoluzione della salute: ")),
+                                    child: Text(
+                                      "Evoluzione della salute: ",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                                 Padding(
                                   padding: EdgeInsets.only(right: 10),
                                   child: Text(
@@ -1091,15 +1145,23 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                       ))
                     : Padding(
                         padding: EdgeInsets.only(right: 10),
-                        child: Text("Nessuna analisi iniziale inserita"),
+                        child: Text(
+                          "Nessuna analisi iniziale inserita",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
                       ),
                 detailmedicalrecord["clinicalDiary"]
                         .containsKey("diagnosticTreatments")
                     ? (Container(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: ListTile(
-                          title:
-                              Center(child: Text("Trattamenti diagnostici:")),
+                          title: Center(
+                              child: Text(
+                            "Trattamenti diagnostici:",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                          )),
                           onTap: () => showDialog(
                               context: context,
                               builder: (_) {
@@ -1118,15 +1180,23 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                       ))
                     : Padding(
                         padding: EdgeInsets.only(right: 10),
-                        child: Text("Nessun trattamento diagnostio inserito"),
+                        child: Text(
+                          "Nessun trattamento diagnostio inserito",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
                       ),
                 detailmedicalrecord["clinicalDiary"]
                         .containsKey("therapeuticTreatments")
                     ? (Container(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: ListTile(
-                          title:
-                              Center(child: Text("Trattamenti terapeutici:")),
+                          title: Center(
+                              child: Text(
+                            "Trattamenti terapeutici:",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                          )),
                           onTap: () => showDialog(
                               context: context,
                               builder: (_) {
@@ -1145,15 +1215,23 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                       ))
                     : Padding(
                         padding: EdgeInsets.only(right: 10),
-                        child: Text("Nessun trattamento terapeutico inserito"),
+                        child: Text(
+                          "Nessun trattamento terapeutico inserito",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
                       ),
                 detailmedicalrecord["clinicalDiary"]
                         .containsKey("rehabilitationTreatments")
                     ? (Container(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: ListTile(
-                          title:
-                              Center(child: Text("Trattamenti riabilitativi:")),
+                          title: Center(
+                              child: Text(
+                            "Trattamenti riabilitativi:",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                          )),
                           onTap: () => showDialog(
                               context: context,
                               builder: (_) {
@@ -1172,14 +1250,20 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                       ))
                     : Padding(
                         padding: EdgeInsets.only(right: 10),
-                        child:
-                            Text("Nessun trattamento riabilitativo inserito"),
+                        child: Text(
+                          "Nessun trattamento riabilitativo inserito",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
                       ),
               ]))
             else
               Padding(
                 padding: EdgeInsets.only(right: 10),
-                child: Text("Nessun diario clinico inserito"),
+                child: Text(
+                  "Nessun diario clinico inserito",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                ),
               ),
           ]),
         ));
