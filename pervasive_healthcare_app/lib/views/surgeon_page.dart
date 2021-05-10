@@ -152,8 +152,8 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
   int kinshipDegreeSelectedIndex = 0;
   int surgeonSelectedIndex = 0;
   int severityIndex = 0;
-  bool anamnesisController = false;
-  bool initialAnalysisController = false;
+  var anamnesisController;
+  var initialAnalysisController;
   bool healthEvolutionController = false;
   bool diagnosticTreatmentsController = false;
   bool therapeuticTreatmentsController = false;
@@ -289,10 +289,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
-                                  if (id.isNotEmpty) {
-                                    anamnesisController = true;
-                                    initialAnalysisController = true;
-                                  }
                                 },
                                 decoration:
                                     InputDecoration(labelText: "Nome Cognome"),
@@ -340,10 +336,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                       if ((anamnesisController) && id.isEmpty) {
                                         return "Campo obbligatorio";
                                       }
-                                      if (id.isNotEmpty) {
-                                        anamnesisController = true;
-                                        initialAnalysisController = true;
-                                      }
                                     },
                                     decoration: InputDecoration(
                                         labelText: "Nome patologia"),
@@ -386,10 +378,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
-                                  if (id.isNotEmpty) {
-                                    anamnesisController = true;
-                                    initialAnalysisController = true;
-                                  }
                                 },
                                 decoration:
                                     InputDecoration(labelText: "Cellulare"),
@@ -409,11 +397,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
-                                  if (id.isNotEmpty) {
-                                    print("logged");
-                                    anamnesisController = true;
-                                    initialAnalysisController = true;
-                                  }
                                 },
                                 decoration:
                                     InputDecoration(labelText: "Informazioni"),
@@ -432,10 +415,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                 validator: (id) {
                                   if ((anamnesisController) && id.isEmpty) {
                                     return "Campo obbligatorio";
-                                  }
-                                  if (id.isNotEmpty) {
-                                    anamnesisController = true;
-                                    initialAnalysisController = true;
                                   }
                                 },
                                 decoration:
@@ -461,8 +440,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(
                                 labelText: "Motivazione del ricovero"),
@@ -476,8 +453,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Investigazione"),
@@ -502,8 +477,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Psicologico"),
@@ -520,8 +493,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration:
                                 InputDecoration(labelText: "Nutrizionale"),
@@ -537,8 +508,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(labelText: "Educativo"),
                           ),
@@ -554,8 +523,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
-                              if (id.isNotEmpty)
-                                initialAnalysisController = true;
                             },
                             decoration: InputDecoration(labelText: "Sociale"),
                           ),
@@ -579,12 +546,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                         children: [
                           TextFormField(
                             controller: healthEvolutionInfoController,
-                            validator: (id) {
-                              if (id.isNotEmpty) {
-                                clinicalDiaryController = true;
-                                healthEvolutionController = true;
-                              }
-                            },
                             decoration:
                                 InputDecoration(labelText: "Informazioni"),
                           ),
@@ -606,12 +567,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: diagnosticTreatmentDescrController,
-                            validator: (id) {
-                              if (id.isNotEmpty) {
-                                clinicalDiaryController = true;
-                                diagnosticTreatmentsController = true;
-                              }
-                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
                           ),
@@ -639,12 +594,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: therapeuticTreatmentDescrController,
-                            validator: (id) {
-                              if (id.isNotEmpty) {
-                                clinicalDiaryController = true;
-                                therapeuticTreatmentsController = true;
-                              }
-                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
                           ),
@@ -672,12 +621,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           ),
                           TextFormField(
                             controller: rehabilitationTreatmentDescrController,
-                            validator: (id) {
-                              if (id.isNotEmpty) {
-                                clinicalDiaryController = true;
-                                rehabilitationTreatmentsController = true;
-                              }
-                            },
                             decoration:
                                 InputDecoration(labelText: "Descrizione"),
                           ),
@@ -700,15 +643,43 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
 
   Future<void> insert() async {
     if (formKey.currentState.validate()) {
+      (hospitalizationMotivationController.text.isNotEmpty &&
+              psychologicalStateController.text.isNotEmpty)
+          ? initialAnalysisController = true
+          : initialAnalysisController = false;
+
+      (familiarNameController.text.isNotEmpty)
+          ? anamnesisController = true
+          : anamnesisController = false;
+      if (healthEvolutionInfoController.text.isNotEmpty ||
+          diagnosticTreatmentDescrController.text.isNotEmpty ||
+          therapeuticTreatmentDescrController.text.isNotEmpty ||
+          rehabilitationTreatmentDescrController.text.isNotEmpty) {
+        clinicalDiaryController = true;
+        (healthEvolutionInfoController.text.isNotEmpty)
+            ? healthEvolutionController = true
+            : healthEvolutionController = false;
+        (diagnosticTreatmentDescrController.text.isNotEmpty)
+            ? diagnosticTreatmentsController = true
+            : diagnosticTreatmentsController = false;
+        (therapeuticTreatmentDescrController.text.isNotEmpty)
+            ? therapeuticTreatmentsController = true
+            : therapeuticTreatmentsController = false;
+        (rehabilitationTreatmentDescrController.text.isNotEmpty)
+            ? rehabilitationTreatmentsController = true
+            : rehabilitationTreatmentsController = false;
+      } else
+        clinicalDiaryController = false;
+
       Map<String, dynamic> body = {};
-      body["medicalRecordID"] = {"value": medicalRecordIDController.text};
       body["doctorID"] = {"value": doctorIDController.text};
       body["patientID"] = {"value": patientIDController.text};
-      body["isClosed"] = isClosedSelected == 1 ? true : false;
+      body["medicalRecordID"] = {"value": medicalRecordIDController.text};
 
+      body["isClosed"] = isClosedSelected == 1 ? true : false;
       if (initialAnalysisController && anamnesisController) {
         body["initialAnalysis"] = {
-          "anamnesi": {
+          "anamnesis": {
             "familiars": {
               "familiars": [
                 {
