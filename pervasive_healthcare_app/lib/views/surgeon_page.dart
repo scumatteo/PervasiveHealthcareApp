@@ -960,11 +960,7 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                                             child: getFamiliarAnamnesis(
                                                 detailmedicalrecord[
                                                         "initialAnalysis"]
-                                                    ["anamnesis"]["familiars"],
-                                                detailmedicalrecord[
-                                                            "initialAnalysis"][
-                                                        "anamnesis"]["familiars"]
-                                                    ["previousPathologies"]),
+                                                    ["anamnesis"]["familiars"]),
                                           ));
                                     }),
                               )),
