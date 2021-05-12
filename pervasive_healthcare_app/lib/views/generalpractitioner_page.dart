@@ -47,17 +47,6 @@ class _GeneralPractitionerPageState extends State<GeneralPractitionerPage> {
                 return CircularProgressIndicator();
             }
           }),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: currentTab == 0
-          ? FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return GeneralPractitionerInfoInsertion();
-                }));
-              },
-            )
-          : Container(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
@@ -281,65 +270,5 @@ class _GeneralPractitionerPageState extends State<GeneralPractitionerPage> {
             },
           );
         });
-  }
-}
-
-class GeneralPractitionerInfoInsertion extends StatefulWidget {
-  GeneralPractitionerInfoInsertion();
-
-  @override
-  _GeneralPractitionerInfoInsertionState createState() =>
-      _GeneralPractitionerInfoInsertionState();
-}
-
-class _GeneralPractitionerInfoInsertionState
-    extends State<GeneralPractitionerInfoInsertion> {
-  TextEditingController doctorIDController = TextEditingController();
-
-  @override
-  void initState() {
-    doctorIDController.text = utils.id;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Inserisci informazioni"),
-          actions: [IconButton(icon: Icon(Icons.save), onPressed: () {})],
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            child: Column(children: [
-              TextFormField(
-                enabled: false,
-                decoration: InputDecoration(labelText: "ID dottore"),
-                controller: doctorIDController,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Visita"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Anamnesi familiare"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Anamnesi remota"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Anamnesi fisiologica"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Prescrizione"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Terapia"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Certificato"),
-              )
-            ]),
-          ),
-        ));
   }
 }

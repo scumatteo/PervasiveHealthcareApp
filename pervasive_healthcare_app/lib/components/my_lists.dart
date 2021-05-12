@@ -27,6 +27,7 @@ Widget getAllergies(List<dynamic> allergies) {
 Widget getPreviousPathologies(List<dynamic> pathologies) {
   return ListView.builder(
       shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
       itemCount: pathologies.length,
       itemBuilder: (_, i) {
         return Column(children: [
@@ -346,47 +347,36 @@ Widget getMedicalCertificates(List<dynamic> medicalCertificates) {
       });
 }
 
-Widget getFamiliarAnamnesis(
-    List<dynamic> familiarAnamnesis, List<dynamic> previousPathologies) {
+Widget getFamiliarAnamnesis(List<dynamic> familiarAnamnesis) {
   return ListView.builder(
       shrinkWrap: true,
       itemCount: familiarAnamnesis.length,
       itemBuilder: (_, i) {
+        List<Widget> widgets = [
+          Text("Nome Cognome: ${familiarAnamnesis[i]["name"]}"),
+          Text(
+              "Grado di parentela: ${familiarAnamnesis[i]["kinshipDegree"]["value"]}"),
+          Text("PATOLOGIE")
+        ];
+        widgets.add(Column(
+          children: (familiarAnamnesis[i]["previousPathologies"]["pathologies"]
+                  as List<dynamic>)
+              .map((e) => Column(
+                    children: [
+                      Text("Nome patologia: ${e["pathologyName"]["value"]}"),
+                      Text("Data di diagnosi: ${e["detectionDate"]["value"]}"),
+                      Text(
+                          "Descrizione: ${e["pathologySeverity"]["description"]}"),
+                    ],
+                  ))
+              .toList(),
+        ));
+        widgets.add(
+            Text("Numero di telefono: ${familiarAnamnesis[i]["phoneNumber"]}"));
         return Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Column(
-              children: [
-                Text("Nome Cognome: ${familiarAnamnesis[i]["name"]}"),
-                Text(
-                    "Grado di parentela: ${familiarAnamnesis[i]["kinshipDegree"]}"),
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: previousPathologies.length,
-                    itemBuilder: (_, y) {
-                      return Column(children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                      "Nome patologia: ${previousPathologies[y]["pathologyName"]["value"]}"),
-                                  Text(
-                                      "Data diagnosi: ${previousPathologies[y]["detectionDate"]["value"]}"),
-                                  Text(
-                                      "Grado di severità: ${previousPathologies[y]["pathologySeverity"]["severity"]} ${previousPathologies[y]["pathologySeverity"]["description"]}"),
-                                ],
-                              )
-                            ]),
-                        Container(height: 5),
-                        Divider(height: 1, thickness: 1)
-                      ]);
-                    }),
-                Text(
-                    "Numero di telefono: ${familiarAnamnesis[i]["phoneNumber"]}")
-              ],
-            )
-          ]),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Column(children: widgets)]),
           Container(height: 5),
           Divider(height: 1, thickness: 1)
         ]);

@@ -79,6 +79,7 @@ class _PatientPageState extends State<PatientPage> {
           setState(() {
             this.appBarTitle = this.appBarTitles[value];
             this.currentTab = value;
+            myInfoFuture = getMyInfo(utils.id, utils.token);
           });
         },
       ),
@@ -283,47 +284,108 @@ class _PatientPageState extends State<PatientPage> {
                   "ID dottore: ${generalPractitionerInfo["doctorID"]["value"]}")
             ],
           )),
-      generalPractitionerInfo.containsKey("visits")
+      generalPractitionerInfo.containsKey("anamnesis")
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      "Visite: ${generalPractitionerInfo["visits"]["history"]}")
-                ],
+              child: ListTile(
+                title: Center(child: Text("Mostra anamnesi familiare")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Anamnesi familiare")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getFamiliarAnamnesis(
+                                generalPractitionerInfo["anamnesis"]
+                                    ["familiars"]["familiars"]),
+                          ));
+                    }),
               ))
           : Container(),
       generalPractitionerInfo.containsKey("anamnesis")
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Anamnesi: ${generalPractitionerInfo["anamnesis"]}")
-                ],
+              child: ListTile(
+                title: Center(child: Text("Mostra anamnesi remota")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Anamnesi remota")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getRemotesAnamnesis(
+                                generalPractitionerInfo["anamnesis"]["remotes"]
+                                    ["history"]),
+                          ));
+                    }),
+              ))
+          : Container(),
+      generalPractitionerInfo.containsKey("visits")
+          ? Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: ListTile(
+                title: Center(child: Text("Mostra visite")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Visite")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getVisits(
+                                generalPractitionerInfo["visits"]["history"]),
+                          ));
+                    }),
               ))
           : Container(),
       generalPractitionerInfo.containsKey("bookingVisits")
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      "Visite prenotate: ${generalPractitionerInfo["bookingVisits"]["history"]}")
-                ],
+              child: ListTile(
+                title: Center(child: Text("Mostra prenotazioni")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Prenotazioni")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getBookingHistory(
+                                generalPractitionerInfo["bookingVisits"]
+                                    ["history"]),
+                          ));
+                    }),
               ))
           : Container(),
       generalPractitionerInfo.containsKey("prescriptions")
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      "Prescrizioni: ${generalPractitionerInfo["prescriptions"]["history"]}")
-                ],
+              child: ListTile(
+                title: Center(child: Text("Mostra prescrizioni")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Prescrizioni")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getPrescriptions(
+                                generalPractitionerInfo["prescriptions"]
+                                    ["history"]),
+                          ));
+                    }),
               ))
           : Container(),
       generalPractitionerInfo.containsKey("therapies")
@@ -350,12 +412,22 @@ class _PatientPageState extends State<PatientPage> {
       generalPractitionerInfo.containsKey("medicalCertificateHistory")
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      "Certificati medici: ${generalPractitionerInfo["medicalCertificateHistory"]["history"]}")
-                ],
+              child: ListTile(
+                title: Center(child: Text("Mostra certificati")),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          scrollable: true,
+                          title: Center(child: Text("Certificati")),
+                          content: Container(
+                            width: 300,
+                            height: 200,
+                            child: getMedicalCertificates(
+                                generalPractitionerInfo[
+                                    "medicalCertificateHistory"]["history"]),
+                          ));
+                    }),
               ))
           : Container(),
     ]));
