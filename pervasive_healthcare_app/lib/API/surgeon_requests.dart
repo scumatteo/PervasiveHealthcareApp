@@ -35,6 +35,7 @@ Future<Map<String, dynamic>> insertMedicalRecord(
   };
   var bodyJson = jsonEncode(body);
   var response = await http.post(url, body: bodyJson, headers: headers);
+  print(jsonDecode(response.body));
   return jsonDecode(response.body);
 }
 

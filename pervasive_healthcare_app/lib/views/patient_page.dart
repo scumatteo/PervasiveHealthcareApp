@@ -4,6 +4,7 @@ import 'package:pervasive_healthcare_app/API/patient_requests.dart';
 import 'package:pervasive_healthcare_app/components/my_drawer.dart';
 import 'package:pervasive_healthcare_app/components/my_lists.dart';
 import 'package:pervasive_healthcare_app/utils.dart' as utils;
+import 'package:pervasive_healthcare_app/views/surgeon_page.dart';
 
 class PatientPage extends StatefulWidget {
   PatientPage();
@@ -207,14 +208,82 @@ class _PatientPageState extends State<PatientPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [Text("Altezza: ${generalInfo["height"]["value"]}")],
           )),
-      generalInfo["allergies"].isEmpty
-          ? Container()
+      generalInfo.containsKey("allergies")
+          ? ListTile(
+              title: Text("Mostra allergie"),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("Allergie"),
+                        content:
+                            getAllergies(generalInfo["allergies"]["allergies"]),
+                      );
+                    });
+              },
+            )
           : Container(
               padding: EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Allergie: ${generalInfo["allergies"]}")],
-              ))
+              child: Text("Nessuna allergia"),
+            ),
+      generalInfo.containsKey("previousPathologies")
+          ? ListTile(
+              title: Text("Mostra patologie pregresse"),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("Patologie pregresse"),
+                        content: getPreviousPathologies(
+                            generalInfo["previousPathologies"]["pathologies"]),
+                      );
+                    });
+              },
+            )
+          : Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text("Nessuna patologia pregressa"),
+            ),
+      generalInfo.containsKey("prescriptionHistory")
+          ? ListTile(
+              title: Text("Mostra storico prescrizioni"),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("Prescrizioni"),
+                        content: getPrescriptions(
+                            generalInfo["prescriptionHistory"]["history"]),
+                      );
+                    });
+              },
+            )
+          : Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text("Nessuna prescrizione da visualizzare"),
+            ),
+      generalInfo.containsKey("examHistory")
+          ? ListTile(
+              title: Text("Mostra storico esami"),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("Esami"),
+                        content:
+                            getExams(generalInfo["examHistory"]["history"]),
+                      );
+                    });
+              },
+            )
+          : Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text("Nessuna esame effettuato"),
+            )
     ]));
   }
 
@@ -230,7 +299,13 @@ class _PatientPageState extends State<PatientPage> {
         itemCount: medicalRecords["history"].length,
         itemBuilder: (_, i) {
           return InkWell(
-              onTap: () {},
+              onTap: () {
+                return Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MedicalRecordDetailPage(
+                            medicalRecords["history"][i])));
+              },
               child: Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Column(

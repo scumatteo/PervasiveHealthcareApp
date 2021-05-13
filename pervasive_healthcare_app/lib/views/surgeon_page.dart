@@ -175,21 +175,20 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
     widget.kinshipDegree.forEach((element) {
       kinshipeDegreeMap[element["id"]] = element["value"];
     });
+
+    diagnosticTreatmentDateController = currentDate;
+    therapeuticTreatmentDateController = currentDate;
+    rehabilitationTreatmentDateController = currentDate;
     super.initState();
   }
 
-  Future<void> _selectDate(
-      BuildContext context, DateTime dateController) async {
+  Future<DateTime> _selectDate(BuildContext context) async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
         initialDate: currentDate,
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
-    if (pickedDate != null && pickedDate != currentDate)
-      setState(() {
-        currentDate = pickedDate;
-        dateController = currentDate;
-      });
+    return pickedDate;
   }
 
   @override
@@ -286,7 +285,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: familiarNameController,
                                 validator: (id) {
-                                  if ((anamnesisController) && id.isEmpty) {
+                                  if (id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
                                 },
@@ -333,7 +332,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                   TextFormField(
                                     controller: pathologyNameController,
                                     validator: (id) {
-                                      if ((anamnesisController) && id.isEmpty) {
+                                      if (id.isEmpty) {
                                         return "Campo obbligatorio";
                                       }
                                     },
@@ -375,7 +374,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: familiarPhoneController,
                                 validator: (id) {
-                                  if ((anamnesisController) && id.isEmpty) {
+                                  if (id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
                                 },
@@ -394,7 +393,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: remoteInformationController,
                                 validator: (id) {
-                                  if ((anamnesisController) && id.isEmpty) {
+                                  if (id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
                                 },
@@ -413,7 +412,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               TextFormField(
                                 controller: physiologicInformationController,
                                 validator: (id) {
-                                  if ((anamnesisController) && id.isEmpty) {
+                                  if (id.isEmpty) {
                                     return "Campo obbligatorio";
                                   }
                                 },
@@ -435,8 +434,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                             controller: hospitalizationMotivationController,
                             validator: (id) {
                               if ((systemsInvestigationController
-                                          .text.isNotEmpty ||
-                                      anamnesisController) &&
+                                      .text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -448,8 +446,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                             controller: systemsInvestigationController,
                             validator: (id) {
                               if ((hospitalizationMotivationController
-                                          .text.isNotEmpty ||
-                                      anamnesisController) &&
+                                      .text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -472,8 +469,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               if ((nutritionalStateController.text.isNotEmpty ||
                                       educationalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty ||
-                                      initialAnalysisController) &&
+                                      socialStateController.text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -488,8 +484,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                           .text.isNotEmpty ||
                                       educationalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty ||
-                                      initialAnalysisController) &&
+                                      socialStateController.text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -503,8 +498,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               if ((nutritionalStateController.text.isNotEmpty ||
                                       psychologicalStateController
                                           .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty ||
-                                      initialAnalysisController) &&
+                                      socialStateController.text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -518,8 +512,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                                       educationalStateController
                                           .text.isNotEmpty ||
                                       psychologicalStateController
-                                          .text.isNotEmpty ||
-                                      initialAnalysisController) &&
+                                          .text.isNotEmpty) &&
                                   id.isEmpty) {
                                 return "Campo obbligatorio";
                               }
@@ -561,8 +554,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           Text(currentDate.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
-                            onPressed: () => _selectDate(
-                                context, diagnosticTreatmentDateController),
+                            onPressed: () async {
+                              DateTime date = await _selectDate(context);
+                              setState(() {
+                                diagnosticTreatmentDateController = date;
+                              });
+                            },
                             child: Text("Seleziona la data"),
                           ),
                           TextFormField(
@@ -588,8 +585,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           Text(currentDate.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
-                            onPressed: () => _selectDate(
-                                context, therapeuticTreatmentDateController),
+                            onPressed: () async {
+                              DateTime date = await _selectDate(context);
+                              setState(() {
+                                therapeuticTreatmentDateController = date;
+                              });
+                            },
                             child: Text("Seleziona la data"),
                           ),
                           TextFormField(
@@ -615,8 +616,12 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                           Text(currentDate.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
-                            onPressed: () => _selectDate(
-                                context, rehabilitationTreatmentDateController),
+                            onPressed: () async {
+                              DateTime date = await _selectDate(context);
+                              setState(() {
+                                rehabilitationTreatmentDateController = date;
+                              });
+                            },
                             child: Text("Seleziona la data"),
                           ),
                           TextFormField(
