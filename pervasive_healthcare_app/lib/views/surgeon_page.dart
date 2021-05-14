@@ -580,16 +580,16 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Text(
-                                      "Evoluzione della salute: ",
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                    )),
                                 (Column(
                                   children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: Text(
+                                          "Evoluzione della salute: ",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                     Padding(
                                       padding: EdgeInsets.only(right: 10),
                                       child: Text(
