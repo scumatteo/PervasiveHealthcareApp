@@ -263,268 +263,6 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                       )),
                   ExpansionTile(
                     title: Text(
-                      "Analisi iniziale",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    children: <Widget>[
-                      ExpansionTile(
-                        title: Text(
-                          'Anamnesi',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        children: <Widget>[
-                          ExpansionTile(
-                            title: Text(
-                              'Familiare',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            children: <Widget>[
-                              TextFormField(
-                                controller: familiarNameController,
-                                validator: (id) {
-                                  if (id.isEmpty) {
-                                    return "Campo obbligatorio";
-                                  }
-                                },
-                                decoration:
-                                    InputDecoration(labelText: "Nome Cognome"),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 18),
-                                  child: Row(children: [
-                                    Text("Grado di parentela: "),
-                                    MenuButton<int>(
-                                      child: Container(
-                                          width: 150,
-                                          height: 30,
-                                          child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 6, left: 10),
-                                              child: Text(kinshipeDegreeMap[
-                                                  kinshipDegreeSelectedIndex]))),
-                                      items: kinshipeDegreeMap.keys.toList(),
-                                      itemBuilder: (int value) => Container(
-                                        width: 150,
-                                        height: 30,
-                                        alignment: Alignment.centerLeft,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 0.0, horizontal: 16),
-                                        child: Text(kinshipeDegreeMap[value]),
-                                      ),
-                                      onItemSelected: (int value) {
-                                        setState(() {
-                                          kinshipDegreeSelectedIndex = value;
-                                        });
-                                      },
-                                    )
-                                  ])),
-                              ExpansionTile(
-                                title: Text(
-                                  'Patologie pregresse',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                children: [
-                                  TextFormField(
-                                    controller: pathologyNameController,
-                                    validator: (id) {
-                                      if (id.isEmpty) {
-                                        return "Campo obbligatorio";
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                        labelText: "Nome patologia"),
-                                  ),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 18),
-                                      child: Row(children: [
-                                        Text("Grado di severità: "),
-                                        MenuButton<int>(
-                                          child: Container(
-                                              width: 150,
-                                              height: 30,
-                                              child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 6, left: 10),
-                                                  child: Text(severityMap[
-                                                      severityIndex]))),
-                                          items: severityMap.keys.toList(),
-                                          itemBuilder: (int value) => Container(
-                                            width: 150,
-                                            height: 30,
-                                            alignment: Alignment.centerLeft,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 0.0, horizontal: 16),
-                                            child: Text(severityMap[value]),
-                                          ),
-                                          onItemSelected: (int value) {
-                                            setState(() {
-                                              severityIndex = value;
-                                            });
-                                          },
-                                        )
-                                      ])),
-                                ],
-                              ),
-                              TextFormField(
-                                controller: familiarPhoneController,
-                                validator: (id) {
-                                  if (id.isEmpty) {
-                                    return "Campo obbligatorio";
-                                  }
-                                },
-                                decoration:
-                                    InputDecoration(labelText: "Cellulare"),
-                              ),
-                            ],
-                          ),
-                          ExpansionTile(
-                            title: Text(
-                              'Remota',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            children: [
-                              TextFormField(
-                                controller: remoteInformationController,
-                                validator: (id) {
-                                  if (id.isEmpty) {
-                                    return "Campo obbligatorio";
-                                  }
-                                },
-                                decoration:
-                                    InputDecoration(labelText: "Informazioni"),
-                              ),
-                            ],
-                          ),
-                          ExpansionTile(
-                            title: Text(
-                              'Fisiologica',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            children: [
-                              TextFormField(
-                                controller: physiologicInformationController,
-                                validator: (id) {
-                                  if (id.isEmpty) {
-                                    return "Campo obbligatorio";
-                                  }
-                                },
-                                decoration:
-                                    InputDecoration(labelText: "Informazioni"),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text(
-                          'Esaminazione fisica',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        children: [
-                          TextFormField(
-                            controller: hospitalizationMotivationController,
-                            validator: (id) {
-                              if ((systemsInvestigationController
-                                      .text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: "Motivazione del ricovero"),
-                          ),
-                          TextFormField(
-                            controller: systemsInvestigationController,
-                            validator: (id) {
-                              if ((hospitalizationMotivationController
-                                      .text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration:
-                                InputDecoration(labelText: "Investigazione"),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text(
-                          'Valutazione dello stato',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        children: [
-                          TextFormField(
-                            controller: psychologicalStateController,
-                            validator: (id) {
-                              if ((nutritionalStateController.text.isNotEmpty ||
-                                      educationalStateController
-                                          .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration:
-                                InputDecoration(labelText: "Psicologico"),
-                          ),
-                          TextFormField(
-                            controller: nutritionalStateController,
-                            validator: (id) {
-                              if ((psychologicalStateController
-                                          .text.isNotEmpty ||
-                                      educationalStateController
-                                          .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration:
-                                InputDecoration(labelText: "Nutrizionale"),
-                          ),
-                          TextFormField(
-                            controller: educationalStateController,
-                            validator: (id) {
-                              if ((nutritionalStateController.text.isNotEmpty ||
-                                      psychologicalStateController
-                                          .text.isNotEmpty ||
-                                      socialStateController.text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration: InputDecoration(labelText: "Educativo"),
-                          ),
-                          TextFormField(
-                            controller: socialStateController,
-                            validator: (id) {
-                              if ((nutritionalStateController.text.isNotEmpty ||
-                                      educationalStateController
-                                          .text.isNotEmpty ||
-                                      psychologicalStateController
-                                          .text.isNotEmpty) &&
-                                  id.isEmpty) {
-                                return "Campo obbligatorio";
-                              }
-                            },
-                            decoration: InputDecoration(labelText: "Sociale"),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  ExpansionTile(
-                    title: Text(
                       "Diario clinico",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -551,7 +289,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         children: [
-                          Text(currentDate.toString(),
+                          Text(diagnosticTreatmentDateController.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
                             onPressed: () async {
@@ -582,7 +320,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         children: [
-                          Text(currentDate.toString(),
+                          Text(therapeuticTreatmentDateController.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
                             onPressed: () async {
@@ -613,7 +351,7 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         children: [
-                          Text(currentDate.toString(),
+                          Text(rehabilitationTreatmentDateController.toString(),
                               style: TextStyle(fontSize: 18)),
                           RaisedButton(
                             onPressed: () async {
@@ -680,156 +418,56 @@ class _MedicalRecordInsertPageState extends State<MedicalRecordInsertPage> {
       body["doctorID"] = {"value": doctorIDController.text};
       body["patientID"] = {"value": patientIDController.text};
       body["medicalRecordID"] = {"value": medicalRecordIDController.text};
-
       body["isClosed"] = isClosedSelected == 1 ? true : false;
-      if (initialAnalysisController && anamnesisController) {
-        body["initialAnalysis"] = {
-          "anamnesis": {
-            "familiars": {
-              "familiars": [
-                {
-                  "name": familiarNameController.text,
-                  "kinshipDegree": {
-                    "id": kinshipDegreeSelectedIndex,
-                    "value": kinshipeDegreeMap[kinshipDegreeSelectedIndex]
-                  },
-                  "previousPathologies": {
-                    "pathologies": [
-                      {
-                        "pathologyName": {
-                          "value": pathologyNameController.text
-                        },
-                        "detectionDate": {
-                          "value": utils.localDate.format(DateTime.now())
-                        },
-                        "pathologySeverity": {
-                          "description": severityMap[severityIndex],
-                          "severity": {
-                            "id": severityIndex,
-                            "value": severityIndex == 0
-                                ? "ONE"
-                                : severityIndex == 1
-                                    ? "TWO"
-                                    : severityIndex == 2
-                                        ? "THREE"
-                                        : "FOUR"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  "phoneNumber": familiarPhoneController.text
-                }
-              ]
-            },
-            "remotes": {
-              "history": [
-                {
-                  "info": remoteInformationController.text,
-                  "date": utils.localDate.format(DateTime.now())
-                }
-              ]
-            },
-            "physiologic": {
-              "info": physiologicInformationController.text,
-              "date": utils.localDate.format(DateTime.now())
-            }
-          },
-          "physicalExamination": {
-            "hospitalizationMotivation": {
-              "value": hospitalizationMotivationController.text
-            },
-            "systemsInvestigation": {
-              "value": systemsInvestigationController.text
-            }
-          },
-          "stateEvaluation": {
-            "psychological": {"value": psychologicalStateController.text},
-            "nutritional": {"value": nutritionalStateController.text},
-            "educational": {"value": educationalStateController.text},
-            "social": {"value": socialStateController.text}
-          }
-        };
-      } else if (initialAnalysisController) {
-        body["initialAnalysis"] = {
-          "physicalExamination": {
-            "hospitalizationMotivation": {
-              "value": hospitalizationMotivationController.text
-            },
-            "systemsInvestigation": {
-              "value": systemsInvestigationController.text
-            }
-          },
-          "stateEvaluation": {
-            "psychological": {"value": psychologicalStateController.text},
-            "nutritional": {"value": nutritionalStateController.text},
-            "educational": {"value": educationalStateController.text},
-            "social": {"value": socialStateController.text}
-          }
-        };
-      }
-      if (clinicalDiaryController) {
-        body["clinicalDiary"] = {
-          if (healthEvolutionController)
+
+      body["clinicalDiary"] = {
+        "healthEvolution": {
+          "info": {"value": healthEvolutionInfoController.text},
+          "dateTime": "${utils.localDateTime.format(DateTime.now())}"
+        },
+        "diagnosticTreatments": {
+          "diagnosticTreatments": [
             {
-              "healthEvolution": {
-                "info": {"value": healthEvolutionInfoController.text},
-                "dateTime": utils.localDate.format(DateTime.now())
-              },
-            },
-          if (diagnosticTreatmentsController)
-            {
-              "diagnosticTreatments": {
-                "diagnosticTreatments": [
-                  {
-                    "treatment": {
-                      "date": utils.localDate
-                          .format(diagnosticTreatmentDateController),
-                      "description": {
-                        "value": diagnosticTreatmentDescrController.text
-                      },
-                      "doctorID": {"value": doctorTreatmentController.text}
-                    }
-                  }
-                ]
-              },
-            },
-          if (therapeuticTreatmentsController)
-            {
-              "therapeuticTreatments": {
-                "therapeuticTreatments": [
-                  {
-                    "treatment": {
-                      "date": utils.localDate
-                          .format(therapeuticTreatmentDateController),
-                      "description": {
-                        "value": therapeuticTreatmentDescrController.text
-                      },
-                      "doctorID": {"value": doctorTreatmentController.text}
-                    }
-                  }
-                ]
-              },
-            },
-          if (rehabilitationTreatmentsController)
-            {
-              "rehabilitationTreatments": {
-                "rehabilitationTreatments": [
-                  {
-                    "treatment": {
-                      "date": utils.localDate
-                          .format(rehabilitationTreatmentDateController),
-                      "description": {
-                        "value": rehabilitationTreatmentDescrController.text
-                      },
-                      "doctorID": {"value": doctorTreatmentController.text}
-                    }
-                  }
-                ]
+              "treatment": {
+                "date":
+                    "${utils.localDate.format(diagnosticTreatmentDateController)}",
+                "description": {
+                  "value": diagnosticTreatmentDescrController.text
+                },
+                "doctorID": {"value": doctorTreatmentController.text}
               }
             }
-        };
-      }
+          ]
+        },
+        "therapeuticTreatments": {
+          "therapeuticTreatments": [
+            {
+              "treatment": {
+                "date":
+                    "${utils.localDate.format(therapeuticTreatmentDateController)}",
+                "description": {
+                  "value": therapeuticTreatmentDescrController.text
+                },
+                "doctorID": {"value": doctorTreatmentController.text}
+              }
+            }
+          ]
+        },
+        "rehabilitationTreatments": {
+          "rehabilitationTreatments": [
+            {
+              "treatment": {
+                "date":
+                    "${utils.localDate.format(rehabilitationTreatmentDateController)}",
+                "description": {
+                  "value": rehabilitationTreatmentDescrController.text
+                },
+                "doctorID": {"value": doctorTreatmentController.text}
+              }
+            }
+          ]
+        }
+      };
 
       Map<String, dynamic> response =
           await insertMedicalRecord(body, utils.token);
@@ -931,156 +569,6 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                               ? "Chiusa"
                               : "Aperta")),
                 ])),
-            detailmedicalrecord.containsKey("initialAnalysis")
-                ? detailmedicalrecord["initialAnalysis"]
-                        .containsKey("anamnesis")
-                    ? Column(
-                        children: [
-                          Container(
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                title: Center(
-                                  child: Text(
-                                    "Mostra anamnesi familiari",
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                onTap: () => showDialog(
-                                    context: context,
-                                    builder: (_) {
-                                      return AlertDialog(
-                                          scrollable: true,
-                                          title: Center(
-                                              child: Text(
-                                            "Anamnesi familiari",
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                          content: Container(
-                                            width: 300,
-                                            height: 200,
-                                            child: getFamiliarAnamnesis(
-                                                detailmedicalrecord[
-                                                        "initialAnalysis"]
-                                                    ["anamnesis"]["familiars"]),
-                                          ));
-                                    }),
-                              )),
-                          Container(
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                title: Center(
-                                    child: Text(
-                                  "Mostra anamnesi remote",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                                onTap: () => showDialog(
-                                    context: context,
-                                    builder: (_) {
-                                      return AlertDialog(
-                                          scrollable: true,
-                                          title: Center(
-                                              child: Text(
-                                            "Anamnesi remote",
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                          content: Container(
-                                            width: 300,
-                                            height: 200,
-                                            child: getRemotesAnamnesis(
-                                                detailmedicalrecord[
-                                                        "initialAnalysis"]
-                                                    ["anamnesis"]["remotes"]),
-                                          ));
-                                    }),
-                              )),
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 10),
-                                        child: Text(
-                                          "Anamnesi fisiologica: ",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Text(
-                                          "Informazioni: ${detailmedicalrecord["initialAnalysis"]["anamnesis"]["physiologic"]["info"]}"),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Text(
-                                          "Data: ${detailmedicalrecord["initialAnalysis"]["anamnesis"]["physiologic"]["date"]}"),
-                                    ),
-                                  ])),
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                              "Nessuna anamnesi inserita",
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Padding(
-                                            padding: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              "Esaminazione fisica: ",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10),
-                                          child: Text(
-                                              "Motivazione ricovero: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["hospitalizationMotivation"]["value"]}"),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 10),
-                                          child: Text(
-                                              "Investigazione: ${detailmedicalrecord["initialAnalysis"]["physicalExamination"]["systemsInvestigation"]["value"]}"),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                : Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Text(
-                      "Nessuna analisi iniziale inserita",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                    ),
-                  ),
             if (detailmedicalrecord.containsKey("clinicalDiary"))
               (Column(children: [
                 detailmedicalrecord["clinicalDiary"]
@@ -1100,16 +588,20 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                      "Informazioni: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["info"]["value"]}"),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                      "Data: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["dateTime"]}"),
-                                )
+                                (Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                          "Informazioni: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["info"]["value"]}"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                          "Data: ${detailmedicalrecord["clinicalDiary"]["healthEvolution"]["dateTime"]}"),
+                                    )
+                                  ],
+                                )),
                               ],
                             ),
                           ),
@@ -1130,7 +622,7 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                         child: ListTile(
                           title: Center(
                               child: Text(
-                            "Trattamenti diagnostici:",
+                            "Trattamenti diagnostici",
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           )),
@@ -1165,7 +657,7 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                         child: ListTile(
                           title: Center(
                               child: Text(
-                            "Trattamenti terapeutici:",
+                            "Trattamenti terapeutici",
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           )),
@@ -1200,7 +692,7 @@ class _MedicalRecordDetailPageState extends State<MedicalRecordDetailPage> {
                         child: ListTile(
                           title: Center(
                               child: Text(
-                            "Trattamenti riabilitativi:",
+                            "Trattamenti riabilitativi",
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           )),

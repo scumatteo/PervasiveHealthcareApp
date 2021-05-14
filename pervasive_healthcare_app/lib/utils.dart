@@ -4,6 +4,7 @@ String id;
 String token;
 
 DateFormat localDate = DateFormat('yyyy-MM-dd');
+DateFormat localDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss');
 
 DateFormat stringDate = DateFormat('dd/MM/yyyy');
 //TODO datetime
